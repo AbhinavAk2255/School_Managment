@@ -1,0 +1,83 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% load static %}
+{% block dashboard_title %}Librarian Dashboard{% endblock dashboard_title %}
+
+
+{% block buttons %}
+
+<div class="col-sm-6">
+    <!-- Use data-bs-toggle for Bootstrap 5 -->
+    <a href="{% url 'accounts:addbook' %}" class="btn btn-success"><i class="fa-solid fa-minus" data-bs-toggle="tooltip" style="color: #f0f2f5;"></i></i> <span>Add New Book</span></a>
+    <a href="{% url 'accounts:book_list' %}" class="btn btn-success"><i class="fa-solid fa-minus" data-bs-toggle="tooltip" style="color: #f0f2f5;"></i></i> <span>Books</span></a>
+</div>
+
+{% endblock buttons %}
+
+{% block table_content %}
+
+<table class="table table-striped table-hover">
+    <div class="tabletitle d-flex justify-content-between pt-3 pb-3">
+      <h3>Library Table</h3>
+      <a href="{% url 'accounts:add_library' %}"><button class="btn btn-success btn-sm">Add New Record</button></a>
+    </div>
+    <thead>
+      <tr>
+        <th>Student Name</th>
+        <th>Book Name</th>
+        <th>status</th>
+        <th>Issue Date</th>
+        <th>Return Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for l in library_history %}
+      <tr>
+        <td>{{ l.student }}</td>
+        <td>{{ l.book_name }}</td>
+        <td>{{ l.status }}</td>
+        <td>{{ l.issue_date }}</td>
+        <td>{{ l.return_date }}</td>
+        <td>
+          <!-- Update modal trigger attributes -->
+          <a href="{% url 'accounts:update_history' pk=l.id %}" class="edit"><i class="fa-solid fa-pen-to-square fa-xs" data-bs-toggle="tooltip" style="color: #42c328;" title="Edit"></i></a>
+          <a href="#deleteLibraryModal" class="delete" data-bs-toggle="modal" data-library-id="{{ l.id }}"><i class="fa-regular fa-trash-can fa-xs" data-bs-toggle="tooltip" style="color: #ec1818;" title="Delete"></i></a>
+        </td>
+      </tr>
+      {% endfor %}
+      <!-- Other rows here -->
+    </tbody>
+</table>
+
+
+{% endblock table_content %}
+
+
+{% block scripts %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      var deleteUserModal = document.getElementById('deleteStaffStudentModal');
+      deleteUserModal.addEventListener('show.bs.modal', function (event) {
+          var button = event.relatedTarget; // Button that triggered the modal
+          var staffstudentId = button.getAttribute('data-staffstudent-id');
+          console.log(staffstudentId);
+          
+
+           // Extract info from data-* attributes
+          
+          // Update the form action to include the user ID
+          var form = document.getElementById('deleteStaffStudentForm');
+        if (form) {
+            // Update the form action to include the user ID
+            form.action = "{% url 'accounts:staff_deletestudent' 0 %}".replace("0", staffstudentId); // Update to your delete URL pattern
+        } else {
+            console.error("Form not found!");
+        }
+      });
+  });
+</script>
+
+{% endblock scripts %}

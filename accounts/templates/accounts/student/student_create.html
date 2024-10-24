@@ -1,0 +1,120 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Students Creation{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <div class="table-wrapper">
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h2>Manage <b>Students</b></h2>
+                </div>
+                <div class="col-sm-6">
+                    <!-- Use data-bs-toggle for Bootstrap 5 -->
+                    <a href="" class="btn btn-success" aria-hidden="true""><i class="fa-solid fa-plus" data-bs-toggle="tooltip" style="color: #f7f7f7;"></i> <span>Add New Student</span></a>
+                </div>
+            </div>
+        </div>
+        <form method="post" class="mt-4">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            
+            <div class="form-group">
+                <label for="first_name">FirstName</label>
+                {{ form.first_name }}
+                {% if form.first_name.errors %}
+                    <small class="text-danger">
+                        {{ form.first_name.errors }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">LastName</label>
+                {{ form.last_name }}
+                {% if form.last_name.errors %}
+                    <small class="text-danger">
+                        {{ form.last_name.errors }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <div class="form-group"></div>
+                <label for="date_of_birth">DOB</label>
+                {{ form.date_of_birth }}
+                {% if form.date_of_birth.errors %}
+                    <small class="text-danger">
+                        {{ form.date_of_birth.errors }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                {{ form.gender }}
+                {% if form.gender.errors %}
+                    <small class="text-danger">
+                        {{ form.gender.errors }}
+                    </small>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <small class="text-danger">
+                        {{ form.email.errors }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="phone_number">Phone</label>
+                {{ form.phone_number }}
+                {% if form.phone_number.errors %}
+                    <small class="text-danger">
+                        {{ form.phone_number.errors }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address</label>
+                {{ form.address }}
+                {% if form.address.errors %}
+                    <small class="text-danger">
+                        {{ form.address.errors }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="current_class">Class</label>
+                {{ form.current_class }}
+                {% if form.current_class.errors %}
+                    <small class="text-danger">
+                        {{ form.current_class.errors }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="section">Division</label>
+                {{ form.section }}
+                {% if form.section.errors %}
+                    <small class="text-danger">
+                        {{ form.section.errors }}
+                    </small>
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-primary mt-4 w-100">Save</button>
+            {{ form.errors }}
+        </form>
+    </div>
+</div>
+
+
+{% endblock content %}

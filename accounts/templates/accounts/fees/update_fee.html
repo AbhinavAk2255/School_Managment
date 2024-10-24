@@ -1,0 +1,92 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}update Fee Record{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <div class="table-wrapper">
+
+        <div class="table-title">
+            <div class="row">
+            <div class="col-sm-6">
+                <h2>Manage <b>Fee History </b></h2>
+            </div>
+            <div class="col-sm-6">
+                <!-- Use data-bs-toggle for Bootstrap 5 -->
+                <a href="" class="btn btn-success"><i class="fa-solid fa-plus" data-bs-toggle="tooltip" style="color: #f7f7f7;"></i> <span>Back</span></a>
+            </div>
+            </div>
+        </div>
+      
+        <form method="post" class="mt-4">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            
+            <div class="form-group">
+                <label for="student">Student</label>
+                {{ form.student }}
+                {% if form.student.errors %}
+                    <small class="text-danger">
+                        {{ form.student.errors }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="total_fees">Total Fee</label>
+                {{ form.total_fees }}
+                {% if form.total_fees.errors %}
+                    <small class="text-danger">
+                        {{ form.total_fees.errors }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <div class="form-group"></div>
+                <label for="payment_date">Payment Date</label>
+                {{ form.payment_date }}
+                {% if form.payment_date.errors %}
+                    <small class="text-danger">
+                        {{ form.payment_date.errors }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="fees_paid">Fee Paid</label>
+                {{ form.fees_paid }}
+                {% if form.fees_paid.errors %}
+                    <small class="text-danger">
+                        {{ form.fees_paid.errors }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="outstanding_fees">Balance Amount</label>
+                {{ form.outstanding_fees }}
+                {% if form.outstanding_fees.errors %}
+                    <small class="text-danger">
+                        {{ form.outstanding_fees.errors }}
+                    </small>
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="btn btn-primary mt-4 w-100">Save</button>
+            {{ form.errors }}
+        </form>
+
+    </div>
+  </div>
+
+
+{% endblock content %}
+
+{% block scripts %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+
+
+{% endblock scripts %}

@@ -1,0 +1,116 @@
+{% load static %}
+<style>
+    .notification-icon .badge {
+        left: 70%;
+        transform: translateX(-50%);
+        transform: translateY(-50%);
+    }
+
+    .navbar-toggler:focus {
+        text-decoration: none;
+        outline: 0;
+        box-shadow: none; /* Remove box-shadow */
+    }
+</style>
+
+<nav class="navbar navbar-light p-3" style="background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(97,97,164,1) 0%, rgba(88,160,175,1) 53%);
+ color: white;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href=""><h3>GVR Schools</h3></a>
+        <button class="navbar-toggler collapse-nav" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="d-flex align-items-center main-nav">
+            <div class="notification-icon-container me-3">
+                
+                {% if user.is_authenticated %}
+                <a class="btn btn-outline-custom ms-2" href="{% url 'accounts:home' %}">Home</a>
+                <button id="notificationButton" class="notification-icon btn btn-link position-relative" type="button" data-bs-toggle="modal" data-bs-target="#notificationModal">
+                    <i class="fa-regular fa-bell"></i>
+                    <span id="notificationCount" class="badge bg-danger rounded-pill position-absolute top-0 translate-middle p-1 ps-1 d-none" style="font-size: 0.7rem;">
+                        <span class="visually-hidden">unread messages</span>
+                    </span>
+                </button>
+                {% endif %}
+            </div>
+
+            <div class="btn-group">
+                {% if user.is_authenticated %}
+                
+                <button class="profile-icon btn btn-link" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-regular fa-user"></i>
+                    <a class="btn btn-outline-custom" href="">{{user.first_name}} {{user.last_name}}</a>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end mt-3" aria-labelledby="profileDropdown">
+                    <li><a class="dropdown-item" href="{% url 'accounts:profile_view' %}">Profile</a></li>
+                    
+                    {% if user.is_superuser or user.role == "admin" %}
+                    <li class="nav-item">
+                        <a class="dropdown-item" href="{% url 'accounts:admin_dashboard' %}">Admin Dashboard</a>
+                    </li>
+                    {% elif user.role == 'staff' %}
+                    <li class="nav-item">
+                        <a class="dropdown-item" href="{% url 'accounts:staff_dashboard' %}">Staff Dashboard</a>
+                    </li>
+                    {% elif user.role == 'librarian' %}
+                    <li class="nav-item">
+                        <a class="dropdown-item" href="{% url 'accounts:librarian_dashboard' %}">librarian Dashboard</a>
+                    </li>
+
+                    {% endif %}
+                    
+                    <li><a class="dropdown-item" href="">Messages</a></li>
+                    {% comment %} <li><a class="dropdown-item" href="#">Logout</a></li> {% endcomment %}
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a></li>
+                </ul>
+                {% else %}
+                <a class="btn btn-outline-custom ms-2" href="{% url 'accounts:login' %}">Log In</a>
+                <a class="btn btn-outline-custom ms-2" href="{% url 'accounts:user_register' %}">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="collapse collapse-nav" id="navbarNav">
+    <div class="card mt-3 m-3">
+        <div class="card-body">
+            <div class="d-flex justify-content-end">
+                <div class="notification-icon-container me-3">
+                    {% if user.is_authenticated %}
+                    <button id="notificationButton2" class="notification-icon btn btn-link position-relative" type="button" data-bs-toggle="modal" data-bs-target="#notificationModal">
+                        <i class="fa-regular fa-bell"></i>
+                        <span id="notificationCount2" class="badge bg-danger rounded-pill position-absolute top-0 translate-middle p-1 ps-1 d-none" style="font-size: 0.7rem;">
+                            <span class="visually-hidden">unread messages</span>
+                        </span>
+                    </button>
+                    {% endif %}
+                </div>
+
+                <div class="btn-group">
+                    {% if user.is_authenticated %}
+                    <button class="profile-icon btn btn-link" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-regular fa-user"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end mt-3" aria-labelledby="profileDropdown">
+                        <li><a class="dropdown-item" href="{% url 'accounts:profile_view' %}">Profile</a></li>
+                        <li><a class="dropdown-item" href="">Messages</a></li>
+                        {% comment %} <li><a class="dropdown-item" href="">Logout</a></li> {% endcomment %}
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a></li>
+                    </ul>
+                    {% else %}
+                    <a class="btn btn-outline-custom ms-2" href="{% url 'accounts:login' %}">Log In</a>
+                    <a class="btn btn-outline-custom ms-2" href="{% url 'accounts:user_register' %}">Register</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
