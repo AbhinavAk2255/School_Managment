@@ -2,6 +2,63 @@
 
 {% block title %}Students Creation{% endblock title %}
 
+
+{% block styles %}
+
+<style>
+
+    /* Background and container styling */
+    /* body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #f8f9fa;
+      font-family: Arial, sans-serif;
+    } */
+
+    .form-container {
+      background-color: #fff;
+      padding: 30px;
+      width: 100%;
+      margin-top: 30px;
+
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Header styling */
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #007bff;
+      font-weight: bold;
+    }
+
+    /* Form control styling */
+    .form-control {
+      border-radius: 8px;
+      height: 45px;
+    }
+
+    .form-control:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+    }
+
+    /* Custom button styling */
+    .btn-primary {
+      width: 100%;
+      padding: 10px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+</style>
+
+{% endblock styles %}
+
+
 {% block content %}
 
 <div class="container">
@@ -12,109 +69,125 @@
                     <h2>Manage <b>Students</b></h2>
                 </div>
                 <div class="col-sm-6">
-                    <!-- Use data-bs-toggle for Bootstrap 5 -->
-                    <a href="" class="btn btn-success" aria-hidden="true""><i class="fa-solid fa-plus" data-bs-toggle="tooltip" style="color: #f7f7f7;"></i> <span>Add New Student</span></a>
+                    <a href="{% url 'accounts:student_list' %}" class="btn btn-success" aria-hidden="true""><i class="fa-solid fa-arrow-left" data-bs-toggle="tooltip" style="color: #f7f7f7;"></i> <span>Back</span></a>
                 </div>
             </div>
         </div>
-        <form method="post" class="mt-4">
-            {% csrf_token %}
-            {{ form.non_field_errors }}
-            
-            <div class="form-group">
-                <label for="first_name">FirstName</label>
-                {{ form.first_name }}
-                {% if form.first_name.errors %}
-                    <small class="text-danger">
-                        {{ form.first_name.errors }}
-                    </small>
-                {% endif %}
-            </div>
-
-            <div class="form-group">
-                <label for="last_name">LastName</label>
-                {{ form.last_name }}
-                {% if form.last_name.errors %}
-                    <small class="text-danger">
-                        {{ form.last_name.errors }}
-                    </small>
-                {% endif %}
-            </div>
-
-            <div class="form-group"></div>
-                <label for="date_of_birth">DOB</label>
-                {{ form.date_of_birth }}
-                {% if form.date_of_birth.errors %}
-                    <small class="text-danger">
-                        {{ form.date_of_birth.errors }}
-                    </small>
-                {% endif %}
-            </div>
-
-            <div class="form-group">
-                <label for="gender">Gender</label>
-                {{ form.gender }}
-                {% if form.gender.errors %}
-                    <small class="text-danger">
-                        {{ form.gender.errors }}
-                    </small>
-                {% endif %}
-            </div>
-            
-            <div class="form-group">
-                <label for="email">Email</label>
-                {{ form.email }}
-                {% if form.email.errors %}
-                    <small class="text-danger">
-                        {{ form.email.errors }}
-                    </small>
-                {% endif %}
-            </div>
-
-            <div class="form-group">
-                <label for="phone_number">Phone</label>
-                {{ form.phone_number }}
-                {% if form.phone_number.errors %}
-                    <small class="text-danger">
-                        {{ form.phone_number.errors }}
-                    </small>
-                {% endif %}
-            </div>
-
-            <div class="form-group">
-                <label for="address">Address</label>
-                {{ form.address }}
-                {% if form.address.errors %}
-                    <small class="text-danger">
-                        {{ form.address.errors }}
-                    </small>
-                {% endif %}
-            </div>
-
-            <div class="form-group">
-                <label for="current_class">Class</label>
-                {{ form.current_class }}
-                {% if form.current_class.errors %}
-                    <small class="text-danger">
-                        {{ form.current_class.errors }}
-                    </small>
-                {% endif %}
-            </div>
-
-            <div class="form-group">
-                <label for="section">Division</label>
-                {{ form.section }}
-                {% if form.section.errors %}
-                    <small class="text-danger">
-                        {{ form.section.errors }}
-                    </small>
-                {% endif %}
-            </div>
-            <button type="submit" class="btn btn-primary mt-4 w-100">Save</button>
-            {{ form.errors }}
-        </form>
+        <div class="form-container">
+            <h2>Student Creation</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                
+                <div class="row">
+        
+                    <div class="form-group col-md-6">
+                        <label for="first_name">FirstName</label>
+                        {{ form.first_name }}
+                        {% if form.first_name.errors %}
+                            <small class="text-danger">
+                                {{ form.first_name.errors }}
+                            </small>
+                        {% endif %}
+                    </div>
+        
+                    <div class="form-group col-md-6">
+                        <label for="last_name">LastName</label>
+                        {{ form.last_name }}
+                        {% if form.last_name.errors %}
+                            <small class="text-danger">
+                                {{ form.last_name.errors }}
+                            </small>
+                        {% endif %}
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <label for="date_of_birth">DOB</label>
+                    {{ form.date_of_birth }}
+                    {% if form.date_of_birth.errors %}
+                        <small class="text-danger">
+                            {{ form.date_of_birth.errors }}
+                        </small>
+                    {% endif %}
+                </div>
+        
+        
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    {{ form.gender }}
+                    {% if form.gender.errors %}
+                        <small class="text-danger">
+                            {{ form.gender.errors }}
+                        </small>
+                    {% endif %}
+                </div>
+        
+        
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <small class="text-danger">
+                            {{ form.email.errors }}
+                        </small>
+                    {% endif %}
+                </div>
+        
+        
+                <div class="form-group">
+                    <label for="phone_number">Phone</label>
+                    {{ form.phone_number }}
+                    {% if form.phone_number.errors %}
+                        <small class="text-danger">
+                            {{ form.phone_number.errors }}
+                        </small>
+                    {% endif %}
+                </div>
+        
+        
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    {{ form.address }}
+                    {% if form.address.errors %}
+                        <small class="text-danger">
+                            {{ form.address.errors }}
+                        </small>
+                    {% endif %}
+                </div>
+        
+        
+                <div class="row">
+                    <div class="form-group col-md-6">
+                    <label for="current_class">Class</label>
+                            {{ form.current_class }}
+                            {% if form.current_class.errors %}
+                                <small class="text-danger">
+                                    {{ form.current_class.errors }}
+                                </small>
+                            {% endif %}
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="section">Division</label>
+                        {{ form.section }}
+                        {% if form.section.errors %}
+                            <small class="text-danger">
+                                {{ form.section.errors }}
+                            </small>
+                        {% endif %}
+                    </div>
+                </div>
+              <button type="submit" class="btn btn-primary mt-3">Submit</button>
+            </form>
+        </div>
     </div>
 </div>
 
 
 {% endblock content %}
+
+{% block scripts %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+{% endblock scripts %}

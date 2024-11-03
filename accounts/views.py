@@ -3,7 +3,6 @@ from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from school_managment.mixin import RedirectAuthenticatedUserMixin
 from django.views.generic import FormView, TemplateView, View, ListView, CreateView, UpdateView, DeleteView
-
 from django.conf import settings
 from .forms import UserRegistrationForm, LoginForm, ForgotPasswordForm, ResetPasswordForm,UpdateUserForm,ProfileUpdateForm, CreateUserForm,StudentForm
 from .forms import UpdateLibraryHistoryForm, FeeHistoryUpdateForm, AddBookForm
@@ -20,6 +19,7 @@ from django.utils.encoding import force_bytes
 from .token import custom_token_generator
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -261,6 +261,7 @@ class StudentListView(RoleRequiredMixn ,LoginRequiredMixin, ListView):
 
     context_object_name = 'students'
     allowed_roles = ['admin', 'staff']
+    paginate_by = 2
 
     def get_queryset(self):
         return Student.objects.all()
@@ -315,7 +316,24 @@ class AdminDashboardView(RoleRequiredMixn, TemplateView):
 
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
-        context['users'] = CustomUser.objects.all()
+
+        search_querry = self.request.GET.get('search', '')
+        print(search_querry)
+
+        if search_querry:
+            users = CustomUser.objects.filter(
+                username__icontains = search_querry
+            )
+        else:
+            users = CustomUser.objects.all()
+
+
+        paginator = Paginator(users, 3)
+        page_number = self.request.GET.get('page')
+        users_page = paginator.get_page(page_number)
+
+
+        context['users'] = users_page
         context['students'] = Student.objects.all()
         return context
     

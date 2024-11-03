@@ -414,7 +414,7 @@ a:hover {
   margin: 30px 0;
   border-radius: 3px;
   box-shadow: 0 1px 1px rgba(0,0,0,.05);
-  }
+}
 .table-title {        
   padding-bottom: 15px;
   background: #435d7d;
@@ -556,12 +556,6 @@ table.table .avatar {
 
 /* *Pagination styles* */
 
-.next-page{
-  display: flex;
-  justify-content: center;
-  margin-bottom: 50px;
-
-}
 .next-page span{
   border: 1px solid #ff523b;
   margin-left: 10px;
@@ -570,7 +564,12 @@ table.table .avatar {
   line-height: 40px;
   cursor: pointer;
 
+
 }
+.next-page a{
+  text-decoration: none;
+}
+
 .next-page span:hover{
   background-color: #ff523b;
   color: white;

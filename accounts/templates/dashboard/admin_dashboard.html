@@ -8,9 +8,9 @@
 <div class="col-sm-6">
     <!-- Use data-bs-toggle for Bootstrap 5 -->
     <a href="#addEmployeeModal" class="btn btn-success" data-bs-toggle="collapse" data-target=#usertable"><i class="fa-regular fa-user" data-bs-toggle="tooltip" style="color: #f7f7f7;"></i> <span>Users</span></a>
-    <a href="{% url 'accounts:feehistory' %}" class="btn btn-danger"><i class="fa-solid fa-minus" data-bs-toggle="tooltip" style="color: #f0f2f5;"></i></i> <span>Fees History</span></a>
-    <a href="{% url 'accounts:libraryhistory' %}" class="btn btn-danger"><i class="fa-solid fa-minus" data-bs-toggle="tooltip" style="color: #f0f2f5;"></i></i> <span>Library Data</span></a>
-    <a href="{% url 'accounts:student_list' %}" class="btn btn-danger"><i class="fa-solid fa-minus" data-bs-toggle="tooltip" style="color: #f0f2f5;"></i></i> <span>Students</span></a>
+    <a href="{% url 'accounts:feehistory' %}" class="btn btn-danger"><i class="fa-solid fa-indian-rupee-sign" data-bs-toggle="tooltip" style="color: #f0f2f5;"></i></i> <span>Fees History</span></a>
+    <a href="{% url 'accounts:libraryhistory' %}" class="btn btn-danger"><i class="fa-solid fa-book" data-bs-toggle="tooltip" style="color: #f0f2f5;"></i></i> <span>Library Data</span></a>
+    <a href="{% url 'accounts:student_list' %}" class="btn btn-danger"><i class="fa-solid fa-graduation-cap" data-bs-toggle="tooltip" style="color: #f0f2f5;"></i></i> <span>Students</span></a>
 </div>
 
 {% endblock buttons %}
@@ -18,9 +18,14 @@
 {% block table_content %}
 
 <table class="table table-striped table-hover" id="usertable">
+  
     <div class="tabletitle d-flex justify-content-between pt-3 pb-3">
         <h3>User Table</h3>
         <a href="{% url 'accounts:adduser' %}"><button class="btn btn-success btn-sm">Add User</button></a>
+        <form class="d-flex" method="get">
+          <input class="input_area" type="text" name="search">
+          <button class="search_btn">search</button>
+        </form>
     </div>
     <thead>
       <tr>
@@ -74,25 +79,21 @@
       {% endfor %}
       <!-- Other rows here -->
     </tbody>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+    
 </table>
 
+<div class="next-page">
+  {% if users.has_previous %}
+  <a href="?page={{users.previous_page_number}}"><span><<</span></a>
+  {% endif %}
+  {% for i in users.paginator.page_range %}
+  <a href="?page={{i}}"><span>{{i}}</span></a>
+  {% endfor %}
+
+  {% if users.has_next %}
+  <a href="?page={{users.next_page_number}}"><span>>></span></a>
+  {% endif %}
+</div>
 
 {% endblock table_content %}
 
@@ -121,6 +122,22 @@
         }
       });
   });
+
+  document.addEventListener('DOMContentLoaded', () => {
+
+    var search_area = document.querySelector('.input_area');
+    var search_btn = document.querySelector('.search_btn');
+
+    search_btn.addEventListener('click', () => {
+      var search_value = search_area.value;
+      // You might want to do something with search_value here
+      console.log(search_value);
+      // For debugging, log the value
+    });
+  });
+
+
 </script>
+
 
 {% endblock scripts %}

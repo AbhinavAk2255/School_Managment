@@ -2,6 +2,64 @@
 
 {% block title %}Add Library History{% endblock title %}
 
+
+{% block styles %}
+
+<style>
+
+    /* Background and container styling */
+    /* body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #f8f9fa;
+      font-family: Arial, sans-serif;
+    } */
+
+    .form-container {
+      background-color: #fff;
+      padding: 30px;
+      width: 100%;
+      margin-top: 30px;
+
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Header styling */
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #007bff;
+      font-weight: bold;
+    }
+
+    /* Form control styling */
+    .form-control {
+      border-radius: 8px;
+      height: 45px;
+    }
+
+    .form-control:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+    }
+    .form-group{
+        margin-top: 30px;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 10px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+</style>
+
+{% endblock styles %}
+
 {% block content %}
 
 <div class="container">
@@ -14,58 +72,64 @@
             </div>
             <div class="col-sm-6">
                 <!-- Use data-bs-toggle for Bootstrap 5 -->
-                <a href="{% url 'accounts:libraryhistory' %}" class="btn btn-success"><i class="fa-solid fa-plus" data-bs-toggle="tooltip" style="color: #f7f7f7;"></i> <span>Back</span></a>
+                <a href="{% url 'accounts:libraryhistory' %}" class="btn btn-success" aria-hidden="true""><i class="fa-solid fa-arrow-left" data-bs-toggle="tooltip" style="color: #f7f7f7;"></i> <span>Back</span></a>
             </div>
             </div>
         </div>
+
+        <div class="form-container">
+            <h2>Library History</h2>
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                
+                <div class="form-group">
+                    <label for="student">Student</label>
+                    {{ form.student }}
+                    {% if form.student.errors %}
+                        <small class="text-danger">
+                            {{ form.student.errors }}
+                        </small>
+                    {% endif %}
+                </div>
+    
+                <div class="form-group">
+                    <label for="book_name">Book Name</label>
+                    {{ form.book_name }}
+                    {% if form.book_name.errors %}
+                        <small class="text-danger">
+                            {{ form.book_name.errors }}
+                        </small>
+                    {% endif %}
+                </div>
+    
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    {{ form.status }}
+                    {% if form.status.errors %}
+                        <small class="text-danger">
+                            {{ form.status.errors }}
+                        </small>
+                    {% endif %}
+                </div>
+    
+                <div class="form-group">
+                    <label for="return_date">Return Date</label>
+                    {{ form.return_date }}
+                    {% if form.return_date.errors %}
+                        <small class="text-danger">
+                            {{ form.return_date.errors }}
+                        </small>
+                    {% endif %}
+                </div>
+                
+                <button type="submit" class="btn btn-primary mt-4 w-100">Save</button>
+                {{ form.errors }}
+            </form>
+        </div>
       
-        <form method="post" class="mt-4">
-            {% csrf_token %}
-            {{ form.non_field_errors }}
-            
-            <div class="form-group">
-                <label for="student">Student</label>
-                {{ form.student }}
-                {% if form.student.errors %}
-                    <small class="text-danger">
-                        {{ form.student.errors }}
-                    </small>
-                {% endif %}
-            </div>
-
-            <div class="form-group">
-                <label for="book_name">Book Name</label>
-                {{ form.book_name }}
-                {% if form.book_name.errors %}
-                    <small class="text-danger">
-                        {{ form.book_name.errors }}
-                    </small>
-                {% endif %}
-            </div>
-
-            <div class="form-group"></div>
-                <label for="status">Status</label>
-                {{ form.status }}
-                {% if form.status.errors %}
-                    <small class="text-danger">
-                        {{ form.status.errors }}
-                    </small>
-                {% endif %}
-            </div>
-
-            <div class="form-group">
-                <label for="return_date">Return Date</label>
-                {{ form.return_date }}
-                {% if form.return_date.errors %}
-                    <small class="text-danger">
-                        {{ form.return_date.errors }}
-                    </small>
-                {% endif %}
-            </div>
-            
-            <button type="submit" class="btn btn-primary mt-4 w-100">Save</button>
-            {{ form.errors }}
-        </form>
+        
 
     </div>
   </div>
